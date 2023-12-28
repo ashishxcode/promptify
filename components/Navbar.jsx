@@ -1,25 +1,25 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { signIn, signOut, getProviders, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import { set } from "mongoose";
 
 const Navbar = () => {
-  const isUserLoggedIn = true;
+  const { data: session } = useSession();
 
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
-    const setProviders = async () => {
+    const setUpProvider = async () => {
       const response = await getProviders();
 
       setProviders(response);
     };
 
-    setProviders();
+    setUpProvider();
   }, []);
 
   return (
@@ -37,7 +37,7 @@ const Navbar = () => {
 
       {/* Desktop Navigation */}
       <div className="sm:flex hidden">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-prompts" className="black_btn">
               Create
@@ -47,7 +47,7 @@ const Navbar = () => {
             </button>
             <Link href="/profile">
               <Image
-                src="/assets/images/logo.svg"
+                src={session?.user?.image || "/assets/images/logo.svg"}
                 width={30}
                 height={30}
                 className="rounded-full"
@@ -74,10 +74,10 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex">
             <Image
-              src="/assets/images/logo.svg"
+              src={session?.user?.image || "/assets/images/logo.svg"}
               width={30}
               height={30}
               className="rounded-full cursor-pointer"
