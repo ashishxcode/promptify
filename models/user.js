@@ -11,9 +11,10 @@ const UserSchema = new Schema({
     type: String,
     unique: [true, "Username already exists"],
     match: [
-      /^[a-zA-Z0-9]+$/,
-      "Username can only contain alphanumeric characters",
+      /^[a-zA-Z0-9._%+-]+$/,
+      "Username can only include alphanumeric characters, underscores, periods, and percent signs",
     ],
+
     required: [true, "Username is required"],
     trim: true,
   },
