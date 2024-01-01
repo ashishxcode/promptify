@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Form from "@components/Form";
-import { Router } from "next/router";
 
 const CreatePost = () => {
   const [post, setPost] = useState({
@@ -14,14 +13,14 @@ const CreatePost = () => {
   const [submitting, setSubmitting] = useState(false);
   const { data: session } = useSession();
 
+  const router = useRouter();
+
   const createPost = async (e) => {
     e.preventDefault();
     try {
+      setSubmitting(true);
       const response = await fetch("/api/posts/create", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
           title: post.title,
           prompt: post.prompt,
@@ -31,7 +30,7 @@ const CreatePost = () => {
       });
 
       if (response.ok) {
-        Router.push("/");
+        router.push("/");
       }
     } catch (error) {
       console.log("CREATE POST ERROR", error);
