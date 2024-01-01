@@ -1,5 +1,5 @@
 import React from "react";
-// https://youtu.be/wm5gMKuwSYk?t=4543
+
 const Home = () => {
   return (
     <section className="w-full flex-center flex-col">
