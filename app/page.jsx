@@ -1,3 +1,4 @@
+import Feed from "@components/Feed";
 import React from "react";
 
 const Home = () => {
@@ -14,7 +15,7 @@ const Home = () => {
         Promptify is an open-source Al prompting tool for modern world to
         discover, create and share creative prompts
       </p>
-      {/* TODO: Add Feed */}
+      <Feed />
     </section>
   );
 };
